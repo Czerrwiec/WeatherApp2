@@ -1,10 +1,80 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
-
 body {
-    font-family: 'Poppins', sans-serif;
+	font-family: 'Poppins', sans-serif;
+    height: 100vh;
+
+	
+}
+
+h1 {
+	font-size: 300%;
+}
+
+main {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background-image: url('https://picsum.photos/1600/1050');
+	background-size: cover;
+	background-position: center;
+}
+
+.weather-info {
+	height: auto;
+	width: 40%;
+	max-width: 1000px;
+	max-height: 700px;
+	padding: 5%;
+	border-radius: 10px;
+	background: aliceblue;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+	transition: opacity 0.5s;
+    opacity: 0.88;
+}
+
+.weather-info__search-view {
+	height: 200px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+    
+}
+
+.weather-info__search-view label {
+	font-size: 200%;
+}
+
+.weather-info__search-view input {
+    padding: 0.2em;
+    font-size: 20px;
+}
+
+.weather-info__search-view button {
+	border: 2px solid black;
+	padding: 10px 50px;
+	font-size: 100%;
+    cursor: pointer;
+}
+
+.weather-info__forecast-view {
+	display: none;
+}
+
+.weather-info__city {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.weather-info__btn-return {
+	padding: 5px 25px;
+	border: 2px solid black;
+    cursor: pointer;
 }
