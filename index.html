@@ -14,13 +14,33 @@
 
 <body>
 
+    <main>
+
+        <section class="weather-info main-container">
+            <div id="weatherSearchView" class ="weather-info__search-view">
+                <label for="searchInput" class="weather-info__search__label">Check weather:</label>
+                <input type="text" id="searchInput">
+                <button id="searchButton">search</button>
+            </div>
+
+            <div class="weather-info__forecast-view" id="weatherForecastView">
+                <button class="weather-info__btn-return" id="returnToSearchBtn"></button>
+                
+                <div class="weather-info__city">
+                    <h1 class="weather-city"></h1>
+                    <img class="weather-icon" src="" alt="">
+                </div>
+
+                <div class="weather-info__temperatures">
+                    <h2 class="weather-current-temp"></h2>
+                    <p class="weather-max-temp"></p>
+                    <p class="weather-min-temp"></p>
+                </div>
+            </div>
+        </section>
 
 
-
-
-
-
-
+    </main>
 
 
 
