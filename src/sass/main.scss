@@ -5,14 +5,14 @@
 }
 
 body {
-	font-family: 'Poppins', sans-serif;
-    height: 100vh;
-
-	
+	height: 100vh;
+	font-family: 'Montserrat', sans-serif;
+	color: rgb(255, 255, 255);
 }
 
 h1 {
 	font-size: 300%;
+	opacity: 1;
 }
 
 main {
@@ -27,15 +27,13 @@ main {
 
 .weather-info {
 	height: auto;
-	width: 40%;
-	max-width: 1000px;
-	max-height: 700px;
+	max-width: 700px;
 	padding: 5%;
 	border-radius: 10px;
-	background: aliceblue;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+	background: rgb(90, 104, 116);
+	box-shadow: 0 0 5px rgba(90, 104, 116, 0.7);
 	transition: opacity 0.5s;
-    opacity: 0.88;
+	opacity: 0.9;
 }
 
 .weather-info__search-view {
@@ -44,7 +42,6 @@ main {
 	align-items: center;
 	justify-content: space-between;
 	height: 200px;
-    
 }
 
 .weather-info__search-view label {
@@ -52,15 +49,27 @@ main {
 }
 
 .weather-info__search-view input {
-    padding: 0.2em;
-    font-size: 20px;
+	padding: 0.2em;
+	font-size: 20px;
 }
 
 .weather-info__search-view button {
-	border: 2px solid black;
-	padding: 10px 50px;
-	font-size: 100%;
-    cursor: pointer;
+	font-size: 18px;
+	padding: 8px 40px;
+	border: 3px solid rgb(255, 255, 255);
+	border-radius: 5px;
+	background: none;
+	color: white;
+	box-shadow: 0 0 3px rgba(255, 255, 255, 0.6);
+	cursor: pointer;
+	transition: all 0.4s;
+
+	&:hover {
+		background-color: aliceblue;
+		color: black;
+		border: 3px solid rgb(0, 0, 0);
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+	}
 }
 
 .weather-info__forecast-view {
@@ -75,6 +84,18 @@ main {
 
 .weather-info__btn-return {
 	padding: 5px 25px;
-	border: 2px solid black;
-    cursor: pointer;
+	border: 3px solid rgb(255, 255, 255);
+	border-radius: 5px;
+	color: white;
+	background: none;
+	box-shadow: 0 0 3px rgba(255, 254, 254, 0.6);
+	cursor: pointer;
+	transition: all 0.4s;
+
+	&:hover {
+		background-color: aliceblue;
+		color: black;
+		border: 3px solid rgb(0, 0, 0);
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+	}
 }

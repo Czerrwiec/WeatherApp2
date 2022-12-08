@@ -41,29 +41,27 @@ const onEnterSubmit = (event) => {
 		fadeInOut();
 		let input = viewElems.searchInput.value;
 		getWeatherByCity(input).then((data) => {
-			console.log(data);
-			setTimeout(() => {
-				switchView();
-				fadeInOut();
-			}, 500);
+			displayWeatherData(data);
 		});
 	}
 };
 
 const onClickSubmit = () => {
+	fadeInOut();
 	let input = viewElems.searchInput.value;
-	getWeatherByCity(input).then((data) => console.log(data));
-	switchView();
+	getWeatherByCity(input).then((data) => {
+		displayWeatherData(data);
+	});
 };
 
 const fadeInOut = () => {
 	if (
-		viewElems.mainContainer.style.opacity === '0.88' ||
+		viewElems.mainContainer.style.opacity === '0.9' ||
 		viewElems.mainContainer.style.opacity === ''
 	) {
 		viewElems.mainContainer.style.opacity = '0';
 	} else if ((viewElems.mainContainer.style.opacity = '0')) {
-		viewElems.mainContainer.style.opacity = '0.88';
+		viewElems.mainContainer.style.opacity = '0.9';
 	}
 };
 
@@ -83,7 +81,23 @@ const returnToSearch = () => {
 	setTimeout(() => {
 		switchView();
 		fadeInOut();
-	}, 500);
+	}, 400);
+	viewElems.searchInput.value = '';
+};
+
+const displayWeatherData = (data) => {
+	setTimeout(() => {
+		switchView();
+		fadeInOut();
+	}, 400);
+
+	viewElems.weatherCity.textContent = data.name;
+	viewElems.weatherIcon.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+	viewElems.weatherIcon.alt = data.weather[0].description
+
+	viewElems.weatherCurrentTemp.textContent = `Current temp: ${data.main.temp.toFixed(1)}°C`
+	viewElems.weatherMaxTemp.textContent = `Max temp: ${data.main.temp_max.toFixed(1)}°C`
+	viewElems.weatherMinTemp.textContent = `Min temp: ${data.main.temp_min.toFixed(1)}°C`
 };
 
 document.addEventListener('DOMContentLoaded', initializeApp);
