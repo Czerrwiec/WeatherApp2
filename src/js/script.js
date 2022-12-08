@@ -1,103 +1,93 @@
 import { getWeatherByCity } from './apiService.js';
+import { mapListToDOMElements } from './DOMActions.js';
 
-const viewElems = {};
-
-const getDOMElem = (id) => {
-	return document.getElementById(id);
-};
-
-const connectHTMLElems = () => {
-	viewElems.mainContainer = getDOMElem('mainContainer');
-	viewElems.weatherSearchView = getDOMElem('weatherSearchView');
-	viewElems.weatherForecastView = getDOMElem('weatherForecastView');
-
-	viewElems.searchInput = getDOMElem('searchInput');
-	viewElems.searchButton = getDOMElem('searchButton');
-	viewElems.weatherCityContainer = getDOMElem('weatherCityContainer');
-
-	viewElems.weatherCity = getDOMElem('weatherCity');
-	viewElems.weatherIcon = getDOMElem('weatherIcon');
-
-	viewElems.weatherCurrentTemp = getDOMElem('weatherCurrentTemp');
-	viewElems.weatherMaxTemp = getDOMElem('weatherMaxTemp');
-	viewElems.weatherMinTemp = getDOMElem('weatherMinTemp');
-
-	viewElems.returnToSearchBtn = getDOMElem('returnToSearchBtn');
-};
-
-const setupListeners = () => {
-	viewElems.searchInput.addEventListener('keydown', onEnterSubmit);
-	viewElems.searchButton.addEventListener('click', onClickSubmit);
-	viewElems.returnToSearchBtn.addEventListener('click', returnToSearch);
-};
-
-const initializeApp = () => {
-	connectHTMLElems();
-	setupListeners();
-};
-
-const onEnterSubmit = (event) => {
-	if (event.key === 'Enter') {
-		fadeInOut();
-		let input = viewElems.searchInput.value;
-		getWeatherByCity(input).then((data) => {
-			displayWeatherData(data);
-		});
+class WeatherApp {
+	constructor() {
+		this.viewElems = {};
+		this.connectDOMElements();
+		this.setupListeners();
 	}
-};
 
-const onClickSubmit = () => {
-	fadeInOut();
-	let input = viewElems.searchInput.value;
-	getWeatherByCity(input).then((data) => {
-		displayWeatherData(data);
-	});
-};
+	connectDOMElements = () => {
+		const listOfIds = Array.from(document.querySelectorAll('[id]')).map(
+			(elem) => elem.id
+		);
+		this.viewElems = mapListToDOMElements(listOfIds);
+	};
 
-const fadeInOut = () => {
-	if (
-		viewElems.mainContainer.style.opacity === '0.9' ||
-		viewElems.mainContainer.style.opacity === ''
-	) {
-		viewElems.mainContainer.style.opacity = '0';
-	} else if ((viewElems.mainContainer.style.opacity = '0')) {
-		viewElems.mainContainer.style.opacity = '0.9';
-	}
-};
+	setupListeners = () => {
+		this.viewElems.searchInput.addEventListener('keydown', this.handleSubmit);
+		this.viewElems.searchButton.addEventListener('click', this.handleSubmit);
+		this.viewElems.returnToSearchBtn.addEventListener(
+			'click',
+			this.returnToSearch
+		);
+	};
 
-const switchView = () => {
-	if (viewElems.weatherSearchView.style.display !== 'none') {
-		viewElems.weatherSearchView.style.display = 'none';
-		viewElems.weatherForecastView.style.display = 'block';
-	} else {
-		viewElems.weatherForecastView.style.display = 'none';
-		viewElems.weatherSearchView.style.display = 'flex';
-	}
-};
+	handleSubmit = () => {
+		if (event.type === 'click' || event.key === 'Enter') {
+			this.fadeInOut();
+			let input = this.viewElems.searchInput.value;
+			if(this.viewElems.searchInput.value == '') {
+				input = 'New York'
+			}
+			getWeatherByCity(input).then((data) => {
+				this.displayWeatherData(data);
+			});
+		}
+	};
 
-const returnToSearch = () => {
-	fadeInOut();
+	fadeInOut = () => {
+		if (
+			this.viewElems.mainContainer.style.opacity === '0.9' ||
+			this.viewElems.mainContainer.style.opacity === ''
+		) {
+			this.viewElems.mainContainer.style.opacity = '0';
+		} else if ((this.viewElems.mainContainer.style.opacity = '0')) {
+			this.viewElems.mainContainer.style.opacity = '0.9';
+		}
+	};
 
-	setTimeout(() => {
-		switchView();
-		fadeInOut();
-	}, 400);
-	viewElems.searchInput.value = '';
-};
+	switchView = () => {
+		if (this.viewElems.weatherSearchView.style.display !== 'none') {
+			this.viewElems.weatherSearchView.style.display = 'none';
+			this.viewElems.weatherForecastView.style.display = 'block';
+		} else {
+			this.viewElems.weatherForecastView.style.display = 'none';
+			this.viewElems.weatherSearchView.style.display = 'flex';
+		}
+	};
 
-const displayWeatherData = (data) => {
-	setTimeout(() => {
-		switchView();
-		fadeInOut();
-	}, 400);
+	returnToSearch = () => {
+		this.fadeInOut();
 
-	viewElems.weatherCity.textContent = data.name;
-	viewElems.weatherIcon.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
-	viewElems.weatherIcon.alt = data.weather[0].description
+		setTimeout(() => {
+			this.switchView();
+			this.fadeInOut();
+		}, 400);
+		this.viewElems.searchInput.value = '';
+	};
 
-	viewElems.weatherCurrentTemp.textContent = `Current temp: ${data.main.temp.toFixed(1)}°C`
-	viewElems.weatherMaxTemp.textContent = `Max temp: ${data.main.temp_max.toFixed(1)}°C`
-	viewElems.weatherMinTemp.textContent = `Min temp: ${data.main.temp_min.toFixed(1)}°C`
-};
+	displayWeatherData = (data) => {
+		setTimeout(() => {
+			this.switchView();
+			this.fadeInOut();
+		}, 400);
 
-document.addEventListener('DOMContentLoaded', initializeApp);
+		this.viewElems.weatherCity.textContent = data.name;
+		this.viewElems.weatherIcon.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+		this.viewElems.weatherIcon.alt = data.weather[0].description;
+
+		const temp = data.main.temp.toFixed(1)
+		const tempMax = data.main.temp_max.toFixed(1)
+		const tempMin = data.main.temp_min.toFixed(1)
+
+		this.viewElems.weatherCurrentTemp.textContent = `Current temp: ${temp}°C`;
+		this.viewElems.weatherMaxTemp.textContent = `Max temp: ${tempMax}°C`;
+		this.viewElems.weatherMinTemp.textContent = `Min temp: ${tempMin}°C`;
+	};
+}
+
+
+
+document.addEventListener('DOMContentLoaded', new WeatherApp);

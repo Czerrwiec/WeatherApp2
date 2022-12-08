@@ -10,11 +10,3 @@ export const getWeatherByCity = (city) => {
 		.then((resp) => resp.json())
 		.then(data => data)
 };
-
-
-
-
-
-
-
-
