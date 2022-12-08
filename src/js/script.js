@@ -28,12 +28,12 @@ class WeatherApp {
 		if (event.type === 'click' || event.key === 'Enter') {
 			this.fadeInOut();
 			let input = this.viewElems.searchInput.value;
-			if(this.viewElems.searchInput.value == '') {
-				input = 'New York'
+			if (this.viewElems.searchInput.value == '') {
+				input = 'New York';
 			}
 			getWeatherByCity(input).then((data) => {
 				this.displayWeatherData(data);
-			});
+			})
 		}
 	};
 
@@ -74,13 +74,15 @@ class WeatherApp {
 			this.fadeInOut();
 		}, 400);
 
+		const iconURL = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+
 		this.viewElems.weatherCity.textContent = data.name;
-		this.viewElems.weatherIcon.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+		this.viewElems.weatherIcon.src = iconURL
 		this.viewElems.weatherIcon.alt = data.weather[0].description;
 
-		const temp = data.main.temp.toFixed(1)
-		const tempMax = data.main.temp_max.toFixed(1)
-		const tempMin = data.main.temp_min.toFixed(1)
+		const temp = data.main.temp.toFixed(1);
+		const tempMax = data.main.temp_max.toFixed(1);
+		const tempMin = data.main.temp_min.toFixed(1);
 
 		this.viewElems.weatherCurrentTemp.textContent = `Current temp: ${temp}°C`;
 		this.viewElems.weatherMaxTemp.textContent = `Max temp: ${tempMax}°C`;
@@ -88,6 +90,4 @@ class WeatherApp {
 	};
 }
 
-
-
-document.addEventListener('DOMContentLoaded', new WeatherApp);
+document.addEventListener('DOMContentLoaded', new WeatherApp());
